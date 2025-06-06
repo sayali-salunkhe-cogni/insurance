@@ -10,6 +10,7 @@ const products: Product[] = productsData as Product[];
 export const insuranceController = {
   getPolicyById: (req: Request, res: Response) => {
     const { id } = req.params;
+
     const policy = policies.find((p) => p.id === id);
 
     if (policy) {
@@ -22,11 +23,16 @@ export const insuranceController = {
 
   getPoliciesByCustomerName: (req: Request, res: Response) => {
     const { customerName } = req.query;
-    const filteredPolicies = policies.filter(
-      (p) => p.customerName === customerName
-    );
 
-    res.status(200).json(filteredPolicies);
+    if (typeof customerName === 'string') {
+      const filteredPolicies = policies.filter(
+        (p) => p.customerName === customerName
+      );
+
+      res.status(200).json(filteredPolicies);
+    } else {
+      res.status(404).json({ message: "Invalid request parameter!" });
+    }
   },
 
   createPolicy: (req: Request, res: Response) => {
@@ -42,6 +48,10 @@ export const insuranceController = {
       status: "active",
       createdAt: new Date().toISOString(),
     };
+
+    if (!customerName || !productId || !premium) {
+      res.status(404).json({ message: "Mandatory input parameters are missing!" });
+    }
 
     policies.push(newPolicy);
     res.status(201).json(newPolicy);

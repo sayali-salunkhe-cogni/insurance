@@ -63,13 +63,23 @@ describe('insuranceController', () => {
     });
   });
 
+  test('getPolicyById should return 404 if no policy id is provided', () => {
+    req.params = { id: '' };
+
+    insuranceController.getPolicyById(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: 'Policy not found!' });
+
+  });
+
   test('getPolicyById should return 404 if policy is not found', () => {
     req.params = { id: 'pol_000' };
 
     insuranceController.getPolicyById(req as Request, res as Response);
 
     expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Policy not found' });
+    expect(res.json).toHaveBeenCalledWith({ message: 'Policy not found!' });
   });
 
   test('getPoliciesByCustomerName should return policies for a specific customer', () => {
@@ -100,4 +110,33 @@ describe('insuranceController', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith([]);
   });
+
+  test('createPolicy should return 201 with policy details', () => {
+    req.body = {
+                  productId: 'prod_motor',
+                  customerName: 'Sayali Salunkhe',
+                  startDate: '2025-06-06',
+                  endDate: '2026-06-05',
+                  premium: 100
+                };
+
+    insuranceController.createPolicy(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+  });
+
+  test('createPolicy should return 404 if invalid payload provided', () => {
+    req.body = {
+                  productId: 'prod_motor',
+                  customerName: 'Sayali Salunkhe',
+                  startDate: '2025-06-06',
+                  endDate: '2026-06-05'
+                };
+
+    insuranceController.createPolicy(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: 'Mandatory input parameters are missing!' });
+  });
+
 });

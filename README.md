@@ -7,18 +7,18 @@ This project is an Insurance application built with TypeScript. It provides a sc
 ```
 insurance
 ├── src
-│   ├── index.ts              # Main application setup
-│   ├── server.ts             # Server logic and startup
-│   ├── config                # Configuration settings
-│   ├── controllers           # Route controllers
-│   ├── routes                # Application routes
-│   ├── middleware            # Middleware functions
-│   ├── models                # Data models
-│   ├── services              # Business logic services
-│   └── types                 # TypeScript types and interfaces
-├── package.json              # Project metadata and dependencies
-├── tsconfig.json             # TypeScript configuration
-└── README.md                 # Project documentation
+│   ├── index.ts                       # Main application setup and server startup
+│   ├── config                         # Configuration settings
+│   ├── controllers                    # Application controllers
+│   ├── routes                         # Application routes
+│   ├── middleware                     # Middleware functions
+│   ├── models                         # Data models
+│   └── types                          # TypeScript types and interfaces
+├── Insurance.postman_collection.json  # Postman collection
+├── jest.config.js                     # Jest configuration
+├── package.json                       # Project metadata and dependencies
+├── tsconfig.json                      # TypeScript configuration
+└── README.md                          # Project documentation
 ```
 
 ## Getting Started
